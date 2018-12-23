@@ -15,6 +15,9 @@
 #include "Port.h"
 #include "macros.h"
 #include "DIO.h"
+#define INSTRUCTION_MODE 0 
+#define DATA_MODE 1
+#define WRITE 0
 #define NULLTER '\0'
 #define SET_ALL_PORT_HIGH 0xff
 #if defined LCD_8
