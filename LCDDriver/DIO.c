@@ -52,48 +52,93 @@ void DIO_vSetPinDirection(uint8 parPortName,uint8 parDirection,uint8 parPinNo)
 }
 
 
-void DIO_vSetHighNibbleDirection(uint8 PortName,uint8 parValueToBeAdded)
+void DIO_vSetHighNibbleDirection(uint8 PortName,uint8 highNibble)
 {
-switch (PortName)
-{
-	case 'A':
-		DDRA |= (parValueToBeAdded & 0b11110000);
-	
-	break;
-	case 'B':
-		DDRB |= (parValueToBeAdded & 0b11110000);
-	break;
-	case 'C':
-		DDRC |= (parValueToBeAdded & 0b11110000);
-	break;
-	case 'D':
-		DDRD |= (parValueToBeAdded & 0b11110000);
-	break;
-}
-
-}
-
-void DIO_vSetLowNibbleDirection(uint8 PortName,uint8 parValueToBeAdded){
 	switch (PortName)
 	{
 		case 'A':
-			DDRA |= (parValueToBeAdded & 0b00001111);
-		
+		if(1 == highNibble){
+			DDRA |= 0b11110000;
+		}
+		else{
+			DDRA &= 0b00001111;
+		}
 		break;
 		case 'B':
-			DDRB |= (parValueToBeAdded & 0b00001111);
+		if(1 == highNibble){
+			DDRB |= 0b11110000;
+		}
+		else{
+			DDRB &= 0b00001111;
+		}
 		break;
 		case 'C':
-			DDRC |= (parValueToBeAdded & 0b00001111);
-		
+		if(1 == highNibble){
+			DDRC |= 0b11110000;
+		}
+		else{
+			DDRC &= 0b00001111;
+		}
 		break;
 		case 'D':
-			DDRD |= (parValueToBeAdded & 0b00001111);
-		
+		if(1 == highNibble){
+			DDRD|= 0b11110000;
+		}
+		else{
+			DDRD &= 0b00001111;
+		}
 		break;
 	}
 	
 }
+
+void DIO_vSetLowNibbleDirection(uint8 PortName,uint8 lowNibble){
+switch (PortName)
+{
+	case 'A':
+	if (1 == lowNibble)
+	{
+		DDRA |= 0b00001111;
+	}
+	else
+	{
+		DDRA &= 0b11110000;
+	}
+	break;
+	case 'B':
+	if (1 == lowNibble)
+	{
+		DDRB |= 0b00001111;
+	}
+	else
+	{
+		DDRB &= 0b11110000;
+	}
+	break;
+	case 'C':
+	if (1 == lowNibble)
+	{
+		DDRC |= 0b00001111;
+	}
+	else
+	{
+		DDRC &= 0b11110000;
+	}
+	break;
+	case 'D':
+	if (1 == lowNibble)
+	{
+		DDRD |= 0b00001111;
+	}
+	else
+	{
+		DDRD &= 0b11110000;
+	}
+	break;
+}
+}
+
+
 
 void DIO_vWrite(uint8 parPortName,uint8 parVoltType,uint8 parPinNum){
 	
@@ -141,6 +186,27 @@ void DIO_vWrite(uint8 parPortName,uint8 parVoltType,uint8 parPinNum){
 		break;
 	}
 }
+
+uint8 DIO_uint8Read(uint8 PortName,uint8 PinNum){
+	switch (PortName)
+	{
+		case 'A':
+		return READ_BIT(PINA,PinNum);
+		break;
+		case 'B':
+		return READ_BIT(PINB,PinNum);
+		break;
+		case 'C':
+		return READ_BIT(PINC,PinNum);
+		break;
+		case 'D':
+		return READ_BIT(PIND,PinNum);
+		break;
+		
+	}
+	return 0;
+}
+
 
 void DIO_vWriteDataInLCD(uint8 parPortName,uint8 parData){
 	switch (parPortName)
@@ -215,4 +281,23 @@ void DIO_vSetHighNibblePortWithLowNibbleData(uint8 parPortName,uint8 parData)
 		break;
 	}
 	
+}
+
+void DIO_vSetPort(uint8 PortName){
+	switch (PortName)
+	{
+		case 'A':
+		PORTA = 0xff;
+		break;
+		case 'B':
+		PORTB = 0xff;
+		break;
+		case 'C':
+		PORTC = 0xff;
+		break;
+		case 'D':
+		PORTD = 0xff;
+		break;
+		
+	}
 }

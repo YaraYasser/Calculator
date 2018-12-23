@@ -9,7 +9,7 @@
 #ifndef MAIN_H_
 #define MAIN_H_
 #define LCD_4
-#define F_CPU 8000000ul
+#define F_CPU 8000000UL
 #define HALF_REGESTER_SIZE 4
 
 typedef unsigned char uint8;

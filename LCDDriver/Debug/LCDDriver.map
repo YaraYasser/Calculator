@@ -3,7 +3,7 @@ Archive member included to satisfy reference by file (symbol)
 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_exit.o)
                               C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.2.209/gcc/dev/atmega32/avr5/crtatmega32.o (exit)
 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_copy_data.o)
-                              main.o (__do_copy_data)
+                              KeyPadDriver.o (__do_copy_data)
 
 Discarded input sections
 
@@ -14,11 +14,22 @@ Discarded input sections
  .bss           0x00000000        0x0 DIO.o
  .text.DIO_vSetPinDirection
                 0x00000000       0xe0 DIO.o
+ .text.DIO_uint8Read
+                0x00000000       0x62 DIO.o
  .text.DIO_vWriteDataInLCD
                 0x00000000       0x26 DIO.o
+ .text.DIO_vSetHighNibblePortWithHighNibbleData
+                0x00000000       0x56 DIO.o
+ .text.DIO_vSetHighNibblePortWithLowNibbleData
+                0x00000000       0x6e DIO.o
+ .text          0x00000000        0x0 KeyPadDriver.o
+ .data          0x00000000        0x0 KeyPadDriver.o
+ .bss           0x00000000        0x0 KeyPadDriver.o
  .text          0x00000000        0x0 LCD.o
  .data          0x00000000        0x0 LCD.o
  .bss           0x00000000        0x0 LCD.o
+ .text.LCD_vPrintString
+                0x00000000       0x1e LCD.o
  .text.LCD_vClearScreen
                 0x00000000        0x8 LCD.o
  .text          0x00000000        0x0 main.o
@@ -73,6 +84,7 @@ Linker script and memory map
 
 LOAD C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.2.209/gcc/dev/atmega32/avr5/crtatmega32.o
 LOAD DIO.o
+LOAD KeyPadDriver.o
 LOAD LCD.o
 LOAD main.o
 START GROUP
@@ -182,7 +194,7 @@ END GROUP
 .rela.plt
  *(.rela.plt)
 
-.text           0x00000000      0x3c2
+.text           0x00000000      0x468
  *(.vectors)
  .vectors       0x00000000       0x54 C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.2.209/gcc/dev/atmega32/avr5/crtatmega32.o
                 0x00000000                __vector_default
@@ -263,44 +275,44 @@ END GROUP
                 0x00000082                . = ALIGN (0x2)
  *(.text.*)
  .text.DIO_vSetHighNibbleDirection
-                0x00000082       0x3e DIO.o
+                0x00000082       0x66 DIO.o
                 0x00000082                DIO_vSetHighNibbleDirection
  .text.DIO_vSetLowNibbleDirection
-                0x000000c0       0x3e DIO.o
-                0x000000c0                DIO_vSetLowNibbleDirection
+                0x000000e8       0x66 DIO.o
+                0x000000e8                DIO_vSetLowNibbleDirection
  .text.DIO_vWrite
-                0x000000fe       0xe0 DIO.o
-                0x000000fe                DIO_vWrite
- .text.DIO_vSetHighNibblePortWithHighNibbleData
-                0x000001de       0x56 DIO.o
-                0x000001de                DIO_vSetHighNibblePortWithHighNibbleData
- .text.DIO_vSetHighNibblePortWithLowNibbleData
-                0x00000234       0x6e DIO.o
-                0x00000234                DIO_vSetHighNibblePortWithLowNibbleData
+                0x0000014e       0xe0 DIO.o
+                0x0000014e                DIO_vWrite
+ .text.DIO_vSetPort
+                0x0000022e       0x2e DIO.o
+                0x0000022e                DIO_vSetPort
+ .text.keyPad_vIntial
+                0x0000025c       0x18 KeyPadDriver.o
+                0x0000025c                keyPad_vIntial
+ .text.keyPad_vScan
+                0x00000274       0xcc KeyPadDriver.o
+                0x00000274                keyPad_vScan
  .text.setFallingEdge
-                0x000002a2       0x2e LCD.o
+                0x00000340       0x2e LCD.o
  .text.LCD_vSendCmd
-                0x000002d0       0x2a LCD.o
-                0x000002d0                LCD_vSendCmd
+                0x0000036e       0x36 LCD.o
+                0x0000036e                LCD_vSendCmd
  .text.LCD_vInit
-                0x000002fa       0x46 LCD.o
-                0x000002fa                LCD_vInit
+                0x000003a4       0x3a LCD.o
+                0x000003a4                LCD_vInit
  .text.LCD_vPrintChar
-                0x00000340       0x2a LCD.o
-                0x00000340                LCD_vPrintChar
- .text.LCD_vPrintString
-                0x0000036a       0x1e LCD.o
-                0x0000036a                LCD_vPrintString
+                0x000003de       0x36 LCD.o
+                0x000003de                LCD_vPrintChar
  .text.LCD_vMoveCursir
-                0x00000388       0x20 LCD.o
-                0x00000388                LCD_vMoveCursir
- .text.main     0x000003a8       0x16 main.o
-                0x000003a8                main
-                0x000003be                . = ALIGN (0x2)
+                0x00000414       0x20 LCD.o
+                0x00000414                LCD_vMoveCursir
+ .text.main     0x00000434       0x30 main.o
+                0x00000434                main
+                0x00000464                . = ALIGN (0x2)
  *(.fini9)
- .fini9         0x000003be        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_exit.o)
-                0x000003be                _exit
-                0x000003be                exit
+ .fini9         0x00000464        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_exit.o)
+                0x00000464                _exit
+                0x00000464                exit
  *(.fini9)
  *(.fini8)
  *(.fini8)
@@ -319,39 +331,37 @@ END GROUP
  *(.fini1)
  *(.fini1)
  *(.fini0)
- .fini0         0x000003be        0x4 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_exit.o)
+ .fini0         0x00000464        0x4 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_exit.o)
  *(.fini0)
-                0x000003c2                _etext = .
+                0x00000468                _etext = .
 
-.data           0x00800060        0x6 load address 0x000003c2
+.data           0x00800060       0x10 load address 0x00000468
                 0x00800060                PROVIDE (__data_start, .)
  *(.data)
  *(.data*)
  *(.gnu.linkonce.d*)
  *(.rodata)
+ .rodata        0x00800060       0x10 KeyPadDriver.o
  *(.rodata*)
- .rodata.str1.1
-                0x00800060        0x5 main.o
  *(.gnu.linkonce.r*)
-                0x00800066                . = ALIGN (0x2)
- *fill*         0x00800065        0x1 
-                0x00800066                _edata = .
-                0x00800066                PROVIDE (__data_end, .)
+                0x00800070                . = ALIGN (0x2)
+                0x00800070                _edata = .
+                0x00800070                PROVIDE (__data_end, .)
 
-.bss            0x00800066        0x0
+.bss            0x00800070        0x0
                 [!provide]                PROVIDE (__bss_start, .)
  *(.bss)
  *(.bss*)
  *(COMMON)
                 [!provide]                PROVIDE (__bss_end, .)
-                0x000003c2                __data_load_start = LOADADDR (.data)
-                0x000003c8                __data_load_end = (__data_load_start + SIZEOF (.data))
+                0x00000468                __data_load_start = LOADADDR (.data)
+                0x00000478                __data_load_end = (__data_load_start + SIZEOF (.data))
 
-.noinit         0x00800066        0x0
+.noinit         0x00800070        0x0
                 [!provide]                PROVIDE (__noinit_start, .)
  *(.noinit*)
                 [!provide]                PROVIDE (__noinit_end, .)
-                0x00800066                _end = .
+                0x00800070                _end = .
                 [!provide]                PROVIDE (__heap_start, .)
 
 .eeprom         0x00810000        0x0
@@ -395,6 +405,7 @@ END GROUP
  *(.comment)
  .comment       0x00000000       0x30 DIO.o
                                  0x31 (size before relaxing)
+ .comment       0x00000030       0x31 KeyPadDriver.o
  .comment       0x00000030       0x31 LCD.o
  .comment       0x00000030       0x31 main.o
 
@@ -418,59 +429,69 @@ END GROUP
 .debug_sfnames
  *(.debug_sfnames)
 
-.debug_aranges  0x00000000       0xc0
+.debug_aranges  0x00000000       0xf8
  *(.debug_aranges)
  .debug_aranges
-                0x00000000       0x50 DIO.o
+                0x00000000       0x60 DIO.o
  .debug_aranges
-                0x00000050       0x50 LCD.o
+                0x00000060       0x28 KeyPadDriver.o
  .debug_aranges
-                0x000000a0       0x20 main.o
+                0x00000088       0x50 LCD.o
+ .debug_aranges
+                0x000000d8       0x20 main.o
 
 .debug_pubnames
  *(.debug_pubnames)
 
-.debug_info     0x00000000      0xc8b
+.debug_info     0x00000000      0xe1d
  *(.debug_info .gnu.linkonce.wi.*)
  .debug_info    0x00000000      0x4e6 C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.2.209/gcc/dev/atmega32/avr5/crtatmega32.o
- .debug_info    0x000004e6      0x215 DIO.o
- .debug_info    0x000006fb      0x4ae LCD.o
- .debug_info    0x00000ba9       0xe2 main.o
+ .debug_info    0x000004e6      0x27b DIO.o
+ .debug_info    0x00000761      0x185 KeyPadDriver.o
+ .debug_info    0x000008e6      0x390 LCD.o
+ .debug_info    0x00000c76      0x1a7 main.o
 
-.debug_abbrev   0x00000000      0x734
+.debug_abbrev   0x00000000      0x8ef
  *(.debug_abbrev)
  .debug_abbrev  0x00000000      0x4a3 C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.2.209/gcc/dev/atmega32/avr5/crtatmega32.o
- .debug_abbrev  0x000004a3       0x89 DIO.o
- .debug_abbrev  0x0000052c      0x17c LCD.o
- .debug_abbrev  0x000006a8       0x8c main.o
+ .debug_abbrev  0x000004a3       0xce DIO.o
+ .debug_abbrev  0x00000571       0xeb KeyPadDriver.o
+ .debug_abbrev  0x0000065c      0x17c LCD.o
+ .debug_abbrev  0x000007d8      0x117 main.o
 
-.debug_line     0x00000000      0x67c
+.debug_line     0x00000000      0x96c
  *(.debug_line .debug_line.* .debug_line_end)
  .debug_line    0x00000000      0x115 C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.2.209/gcc/dev/atmega32/avr5/crtatmega32.o
- .debug_line    0x00000115      0x2c3 DIO.o
- .debug_line    0x000003d8      0x250 LCD.o
- .debug_line    0x00000628       0x54 main.o
+ .debug_line    0x00000115      0x37b DIO.o
+ .debug_line    0x00000490      0x124 KeyPadDriver.o
+ .debug_line    0x000005b4      0x265 LCD.o
+ .debug_line    0x00000819      0x153 main.o
 
-.debug_frame    0x00000000      0x148
+.debug_frame    0x00000000      0x1c0
  *(.debug_frame)
- .debug_frame   0x00000000       0x84 DIO.o
- .debug_frame   0x00000084       0xa0 LCD.o
- .debug_frame   0x00000124       0x24 main.o
+ .debug_frame   0x00000000       0xa4 DIO.o
+ .debug_frame   0x000000a4       0x58 KeyPadDriver.o
+ .debug_frame   0x000000fc       0xa0 LCD.o
+ .debug_frame   0x0000019c       0x24 main.o
 
-.debug_str      0x00000000      0x4b8
+.debug_str      0x00000000      0x514
  *(.debug_str)
  .debug_str     0x00000000      0x196 C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.2.209/gcc/dev/atmega32/avr5/crtatmega32.o
- .debug_str     0x00000196      0x248 DIO.o
-                                0x285 (size before relaxing)
- .debug_str     0x000003de       0xc9 LCD.o
-                                0x2be (size before relaxing)
- .debug_str     0x000004a7       0x11 main.o
-                                0x191 (size before relaxing)
+ .debug_str     0x00000196      0x266 DIO.o
+                                0x2aa (size before relaxing)
+ .debug_str     0x000003fc       0x3e KeyPadDriver.o
+                                0x1ea (size before relaxing)
+ .debug_str     0x0000043a       0xc9 LCD.o
+                                0x23e (size before relaxing)
+ .debug_str     0x00000503       0x11 main.o
+                                0x1fc (size before relaxing)
 
-.debug_loc      0x00000000      0x7be
+.debug_loc      0x00000000      0x991
  *(.debug_loc)
- .debug_loc     0x00000000      0x500 DIO.o
- .debug_loc     0x00000500      0x2be LCD.o
+ .debug_loc     0x00000000      0x5e1 DIO.o
+ .debug_loc     0x000005e1       0xdf KeyPadDriver.o
+ .debug_loc     0x000006c0      0x2be LCD.o
+ .debug_loc     0x0000097e       0x13 main.o
 
 .debug_macinfo
  *(.debug_macinfo)
@@ -490,11 +511,12 @@ END GROUP
 .debug_pubtypes
  *(.debug_pubtypes)
 
-.debug_ranges   0x00000000       0x90
+.debug_ranges   0x00000000       0xb8
  *(.debug_ranges)
- .debug_ranges  0x00000000       0x40 DIO.o
- .debug_ranges  0x00000040       0x40 LCD.o
- .debug_ranges  0x00000080       0x10 main.o
+ .debug_ranges  0x00000000       0x50 DIO.o
+ .debug_ranges  0x00000050       0x18 KeyPadDriver.o
+ .debug_ranges  0x00000068       0x40 LCD.o
+ .debug_ranges  0x000000a8       0x10 main.o
 
 .debug_macro
  *(.debug_macro)

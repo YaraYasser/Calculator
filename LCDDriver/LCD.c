@@ -11,68 +11,24 @@ static void setFallingEdge(void){
 	
 }
 
-#if defined LCD_8
-void LCD_vSendCmd(char cmd){
-	/* put data in port*/
-	DIO_vWriteDataInLCD(LCD_DATA_PORT,cmd);
-	/* choose RS */
-	DIO_vWrite(LCD_PORT,LOW_VOLT,RS);
-	/*send falling edge*/
-	setFallingEdge();
-}
-void LCD_vInit(void){
-	DIO_vSetLowNibbleDirection(LCD_DATA_PORT,SET_ALL_PORT_HIGH);
-	DIO_vSetHighNibbleDirection(LCD_DATA_PORT,SET_ALL_PORT_HIGH);
-	DIO_vSetLowNibbleDirection(LCD_PORT,0x0e);
-	
-	DIO_vWrite(LCD_PORT,LOW_VOLT,RW);
-	
-	/* to let LCD work mode */
-	LCD_vSendCmd(0x38);
-	
-	/* blink cursor*/
-	LCD_vSendCmd(0x0F);
-	
-	/*Clear screen*/
-	LCD_vSendCmd(0x01);
-	_delay_ms(20);
-}
-void LCD_vPrintChar(char parData){
-	DIO_vWrite(LCD_PORT,HIGH_VOLT,RS);
-	
-	DIO_vWriteDataInLCD(LCD_DATA_PORT,parData);
-	
-	setFallingEdge();
-}
-
-void LCD_vPrintString(char* parStr){
-	
-	while(*parStr)
-	{
-		LCD_vPrintChar(*parStr);
-		parStr++;
-	}
-}
-
-
-
-#endif
 
 #if defined LCD_4
 void LCD_vSendCmd(char cmd){
 	/* choose RS */
-	DIO_vWrite(LCD_PORT,LOW_VOLT,RS);
-	
-	DIO_vSetHighNibblePortWithHighNibbleData(LCD_DATA_PORT,cmd);
+	CLR_BIT(PORTB,RS);
+	/*most seg*/
+	PORTA &= 0x0f;
+	PORTA |= cmd & 0xf0;
 	setFallingEdge();
-	DIO_vSetHighNibblePortWithLowNibbleData(LCD_DATA_PORT,cmd);
+	PORTA &= 0x0f;
+	PORTA |= (cmd<<4);
 	setFallingEdge();
 	
 }
 void LCD_vInit(void){
-	DIO_vSetHighNibbleDirection(LCD_DATA_PORT,0xf0);
-	DIO_vSetLowNibbleDirection(LCD_PORT,0x0e);
-	DIO_vWrite(LCD_PORT,LOW_VOLT,RW);
+	DDRA |= 0xf0;
+	DDRB |= 0x0e;
+	CLR_BIT(PORTB,RW);
 
 	/* to let LCD work mode */
 	LCD_vSendCmd(0x33);
@@ -86,11 +42,12 @@ void LCD_vInit(void){
 	_delay_ms(20);
 }
 void LCD_vPrintChar(char parData){
-	DIO_vWrite(LCD_PORT,HIGH_VOLT,RS);
-	
-	DIO_vSetHighNibblePortWithHighNibbleData(LCD_DATA_PORT,parData);
+	SET_BIT(PORTB,RS);
+	PORTA &= 0x0f;
+	PORTA |= parData & 0xf0;
 	setFallingEdge();
-	DIO_vSetHighNibblePortWithLowNibbleData(LCD_DATA_PORT,parData);
+	PORTA &= 0x0f;
+	PORTA |= (parData<<4);
 	setFallingEdge();
 }
 
