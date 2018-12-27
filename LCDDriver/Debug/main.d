@@ -13,7 +13,8 @@ main.d main.o: .././main.c .././Main.h \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\util\delay.h \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\util\delay_basic.h \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\math.h \
- .././KeyPadDriver.h .././DIO.h .././macros.h .././Port.h .././LCD.h
+ .././KeyPadDriver.h .././DIO.h .././macros.h .././Port.h .././LCD.h \
+ .././Calculator.h
 
 .././Main.h:
 
@@ -54,3 +55,5 @@ c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\
 .././Port.h:
 
 .././LCD.h:
+
+.././Calculator.h:

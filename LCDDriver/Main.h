@@ -11,7 +11,8 @@
 #define LCD_4
 #define F_CPU 8000000UL
 #define HALF_REGESTER_SIZE 4
-
+#define NULLTER '\0'
+#define EQUAL '='
 typedef unsigned char uint8;
 
 #endif /* MAIN_H_ */
