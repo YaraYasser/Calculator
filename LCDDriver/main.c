@@ -20,7 +20,7 @@ int main(void)
 	
 	LCD_vInit();
 	LCD_vMoveCursir(0,1);
-    uint8 displayedString;
+    uint8* displayedString;
 	/* Replace with your application code */
     while (1) 
     {
@@ -29,12 +29,10 @@ int main(void)
 			{	
 				LCD_vPrintChar(x);
 				displayedString = Calc_vCalculate(x);
-				if(RESULT_NOT_REQUIRED != displayedString)
+				if('=' == x)
 				{
-					displayedString += '0';
-					displayedString += NULLTER;
-					LCD_vClearScreen();
 					LCD_vMoveCursir(1,1);
+					
 					LCD_vPrintString(displayedString);
 					LCD_vMoveCursir(0,1);
 				}

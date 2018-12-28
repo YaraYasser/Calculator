@@ -23,8 +23,8 @@
 #if defined LCD_8
 void LCD_vSendCmd(char cmd);
 void LCD_vInit(void);
-void LCD_vPrintChar(char parData);
-void LCD_vPrintString(char* parStr);
+void LCD_vPrintChar(uint8 parData);
+void LCD_vPrintString(uint8* parStr);
 void LCD_vClearScreen();
 void LCD_vMoveCursir(unsigned char row,unsigned char col);
 #endif
@@ -33,8 +33,8 @@ void LCD_vMoveCursir(unsigned char row,unsigned char col);
 void LCD_vSendCmd(char cmd);
 
 void LCD_vInit(void);
-void LCD_vPrintChar(char parData);
-void LCD_vPrintString(char* parStr);
+void LCD_vPrintChar(uint8 parData);
+void LCD_vPrintString(unsigned char * parStr);
 void LCD_vClearScreen();
 void LCD_vMoveCursir(unsigned char row,unsigned char col);
 #endif

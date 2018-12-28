@@ -10,8 +10,8 @@
 #define CALCULATOR_H_
 #include "Main.h"
 
-#define RESULT_NOT_REQUIRED 'w'
+#define NO_ARRAY_SIZE 20
 
-uint8 Calc_vCalculate(uint8 parNo);
-void Calc_vOperate(uint8 parNo);
+void Calc_vOperate();
+uint8* Calc_vCalculate(uint8 parNo);
 #endif /* CALCULATOR_H_ */

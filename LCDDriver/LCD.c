@@ -37,7 +37,7 @@ void LCD_vInit(void){
 	LCD_vSendCmd(0x01);
 	_delay_ms(20);
 }
-void LCD_vPrintChar(char parData){
+void LCD_vPrintChar(uint8 parData){
 	DIO_vWrite(LCD_PORT,DATA_MODE,RS);
 	
 	DIO_vWriteDataInLCD(LCD_DATA_PORT,parData);
@@ -45,7 +45,7 @@ void LCD_vPrintChar(char parData){
 	setFallingEdge();
 }
 
-void LCD_vPrintString(char* parStr){
+void LCD_vPrintString(uint8* parStr){
 	
 	while(*parStr)
 	{
@@ -85,7 +85,7 @@ void LCD_vInit(void){
 	LCD_vSendCmd(0x01);
 	_delay_ms(20);
 }
-void LCD_vPrintChar(char parData){
+void LCD_vPrintChar(uint8 parData){
 	DIO_vWrite(LCD_PORT,DATA_MODE,RS);
 	
 	DIO_vSetHighNibblePortWithHighNibbleData(LCD_DATA_PORT,parData);
@@ -94,7 +94,7 @@ void LCD_vPrintChar(char parData){
 	setFallingEdge();
 }
 
-void LCD_vPrintString(char* parStr){
+void LCD_vPrintString(unsigned char * parStr){
 	
 	while(*parStr)
 	{

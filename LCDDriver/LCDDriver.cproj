@@ -15,8 +15,7 @@
     <AssemblyName>LCDDriver</AssemblyName>
     <Name>LCDDriver</Name>
     <RootNamespace>LCDDriver</RootNamespace>
-    <ToolchainFlavour>
-    </ToolchainFlavour>
+    <ToolchainFlavour>Native</ToolchainFlavour>
     <KeepTimersRunning>true</KeepTimersRunning>
     <OverrideVtor>false</OverrideVtor>
     <CacheFlash>true</CacheFlash>
