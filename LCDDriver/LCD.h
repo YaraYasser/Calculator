@@ -18,6 +18,9 @@
 #define INSTRUCTION_MODE 0 
 #define DATA_MODE 1
 #define WRITE 0
+#define RS 1
+#define RW 2
+#define EN 3
 
 #define SET_ALL_PORT_HIGH 0xff
 #if defined LCD_8

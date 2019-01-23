@@ -20,23 +20,27 @@ int main(void)
 	
 	LCD_vInit();
 	LCD_vMoveCursir(0,1);
-    uint8* displayedString;
+    uPtrInt8 displayedString;
 	/* Replace with your application code */
     while (1) 
     {
 			uint8 x = keyPad_vScan();
 			if (NO_PRESS != x)
 			{	
-				LCD_vPrintChar(x);
-				displayedString = Calc_vCalculate(x);
 				if('=' == x)
 				{
 					LCD_vMoveCursir(1,1);
-					
+				displayedString = Calc_vCalculate(x);	
+					//LCD_vPrintChar(*displayedString);
 					LCD_vPrintString(displayedString);
-					LCD_vMoveCursir(0,1);
+					//LCD_vMoveCursir(0,1);
 				}
+				else
+				{
+					Calc_vCalculate(x);
+				LCD_vPrintChar(x);
 				
+				}
 				_delay_ms(40);
 			}
 			

@@ -14,5 +14,6 @@
 #define NULLTER '\0'
 #define EQUAL '='
 typedef unsigned char uint8;
+typedef unsigned char* uPtrInt8;
 
 #endif /* MAIN_H_ */
