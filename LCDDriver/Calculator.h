@@ -14,4 +14,5 @@
 short Calc_vAddition(uint8* arrLeft,short arrLeftCounter,uint8* arrRight,short arrRightCounter,uint8* res,short resCounter);
 void Calc_vOperate();
 uint8* Calc_vCalculate(uint8 parNo);
+void Calc_vClear();
 #endif /* CALCULATOR_H_ */

@@ -10,43 +10,52 @@ static short arrRightNoPtrCounter = 0;
 static uint8 arrAddOne[20];
 static uint8 arrAddOneCounter = 19;
 static uint8 arrAddTwo[20];
-static uint8 arrAddTwoCounter = 18;
+static uint8 arrAddTwoCounter = 19;
 static short endOfArrSizeLeftOperand = 0;	
 static short endOfArrSizeRightOperand = 0;
+
 
 short Calc_vAddition(uPtrInt8 arrLeft,short arrLeftCounter,uPtrInt8 arrRight,short arrRightCounter,uPtrInt8 res,short resCounter)
 {
 	uint8 boolCarryFlag = 0;	
-	short endOfArrSize;
-	if(endOfArrSizeLeftOperand <= endOfArrSizeRightOperand)
+	short endOfSmallestArrSize;
+	
+	if(endOfArrSizeLeftOperand >= endOfArrSizeRightOperand)
 	{
-		endOfArrSize = endOfArrSizeLeftOperand;
+		endOfSmallestArrSize = endOfArrSizeLeftOperand;
 	}
 	else
 	{
-		endOfArrSize = endOfArrSizeRightOperand;
+		endOfSmallestArrSize = endOfArrSizeRightOperand;
 	}
-	while((arrLeftCounter >= endOfArrSize) && (arrRightCounter >= endOfArrSize))
+	
+	
+	while((arrLeftCounter >= endOfSmallestArrSize) && (arrRightCounter >= endOfSmallestArrSize))
 	{
 				
 		if(boolCarryFlag == 1){
-			arrRight[arrRightCounter] += 1;
+			arrRight[arrRightCounter] = (arrRight[arrRightCounter] - '0') + 1;
 			boolCarryFlag = 0;
+			
 		}
-		if((arrRight[arrRightCounter] + (arrLeft[arrLeftCounter] - '0')) > 9)
+		if(( (arrRight[arrRightCounter] - '0') + (arrLeft[arrLeftCounter] - '0')) > 9)
 		{
-			res[resCounter] = (arrRight[arrRightCounter] + (arrLeft[arrLeftCounter] - '0')) % 10;
-			resCounter--;
+			res[resCounter] = ( (arrRight[arrRightCounter] - '0') + (arrLeft[arrLeftCounter] - '0')) % 10;
+			
 			boolCarryFlag = 1;
+			
 		}
 		else
 		{
-			res[resCounter] = arrRight[arrRightCounter] + (arrLeft[arrLeftCounter] - '0');
-			resCounter--;
+			res[resCounter] =  (arrRight[arrRightCounter] - '0') + (arrLeft[arrLeftCounter] - '0');
+			
+				
 		}
 		arrRightCounter--;
 		arrLeftCounter--;
-		if((arrRightCounter == endOfArrSize) || (arrLeftCounter == endOfArrSize))
+		resCounter--;
+		
+		if((arrRightCounter == endOfSmallestArrSize) || (arrLeftCounter == endOfSmallestArrSize))
 		{
 			break;
 		}
@@ -64,7 +73,8 @@ short Calc_vAddition(uPtrInt8 arrLeft,short arrLeftCounter,uPtrInt8 arrRight,sho
 		}
 		else if (arrRightCounter > endOfArrSizeRightOperand)
 		{
-			res[resCounter] = arrRight[arrRightCounter] + 1;
+			res[resCounter] =  (arrRight[arrRightCounter] - '0') + 1;
+			
 			resCounter--;
 			arrRightCounter--;
 		}
@@ -74,22 +84,21 @@ short Calc_vAddition(uPtrInt8 arrLeft,short arrLeftCounter,uPtrInt8 arrRight,sho
 			resCounter--;
 		}
 	}
-	while(arrLeftCounter >= endOfArrSizeLeftOperand)
-	{
-		
+	while(arrLeftCounter > endOfArrSizeLeftOperand)
+	{	
 		res[resCounter] = (arrLeft[arrLeftCounter] - '0');
-			
 		resCounter--;
 		arrLeftCounter--;
 		
-		
 	}
-	while(arrRightCounter >= endOfArrSizeRightOperand)
+	while(arrRightCounter > endOfArrSizeRightOperand)
 	{
-		res[resCounter] = arrRight[arrRightCounter];
+		res[resCounter] =  (arrRight[arrRightCounter] - '0');
+		
 		resCounter--;
 		arrRightCounter--;
 	}
+	
 	return resCounter;
 }
 
@@ -98,6 +107,7 @@ void Calc_vOperate(){
 	
 	uint8 arrFinalResult[NO_ARRAY_SIZE];
 	short arrFinalResultPtrCounter = 19;
+	
 	if(arrRightNoPtrCounter != 0)
 	{
 		arrRightNoPtrCounter--;
@@ -119,7 +129,6 @@ void Calc_vOperate(){
 	
 	
 	
-	
 	if (LastOperator == '-')
 	{
 		if(arrRightNoPtrCounter <= arrLeftNoPtrCounter)
@@ -127,16 +136,16 @@ void Calc_vOperate(){
 			while((arrLeftNoPtrCounter >= 0) && (arrRightNoPtrCounter >= 0))
 			{
 				
-				if((arrLeftNo[arrLeftNoPtrCounter] - '0') < arrRightNo[arrRightNoPtrCounter])
+				if((arrLeftNo[arrLeftNoPtrCounter] - '0') < (arrRightNo[arrRightNoPtrCounter] - '0'))
 				{
 					arrLeftNo[arrLeftNoPtrCounter-1] = (arrLeftNo[arrLeftNoPtrCounter] - '0') - 1;
-					arrFinalResult[arrFinalResultPtrCounter] =  (10 + (arrLeftNo[arrLeftNoPtrCounter] - '0')) - arrRightNo[arrRightNoPtrCounter];
+					arrFinalResult[arrFinalResultPtrCounter] =  (10 + (arrLeftNo[arrLeftNoPtrCounter] - '0')) - (arrRightNo[arrRightNoPtrCounter] - '0');
 					arrFinalResultPtrCounter--;
 					
 				}
 				else
 				{
-					arrFinalResult[arrFinalResultPtrCounter] = (arrLeftNo[arrLeftNoPtrCounter] - '0') - arrRightNo[arrRightNoPtrCounter];
+					arrFinalResult[arrFinalResultPtrCounter] = (arrLeftNo[arrLeftNoPtrCounter] - '0') - (arrRightNo[arrRightNoPtrCounter] - '0');
 					arrFinalResultPtrCounter--;
 				}
 				
@@ -163,41 +172,46 @@ void Calc_vOperate(){
 		uint8 CarryVal = 0;
 		uint8 boolIsFirstMultLevel = 1;
 		uint8 boolIsTwoResLevelFinished = 0;
-		short baseSizeOfLeft = arrLeftNoPtrCounter;
+		short baseSizeOfLeftOperand = arrLeftNoPtrCounter;
+		short baseSizeOfRightOperand = arrRightNoPtrCounter;
+		arrAddTwo[arrAddTwoCounter] = '0';
+		arrAddTwoCounter--;
 		while(arrRightNoPtrCounter >= 0)
-		{	
+		{
 			while(arrLeftNoPtrCounter >= 0)
 			{
 				if (boolIsFirstMultLevel == 1)
 				{
-					if ((arrRightNo[arrRightNoPtrCounter] * (arrLeftNo[arrLeftNoPtrCounter] - '0'))> 10 )
+					if (((arrRightNo[arrRightNoPtrCounter] - '0') * (arrLeftNo[arrLeftNoPtrCounter] - '0'))> 10 )
 					{
-						CarryVal = (arrRightNo[arrRightNoPtrCounter] * (arrLeftNo[arrLeftNoPtrCounter] - '0')) % 100;
-						arrAddOne[arrAddOneCounter] = (arrRightNo[arrRightNoPtrCounter] * (arrLeftNo[arrLeftNoPtrCounter] - '0')) % 10;
-						arrAddOneCounter--;
+						CarryVal = ((arrRightNo[arrRightNoPtrCounter] - '0') * (arrLeftNo[arrLeftNoPtrCounter] - '0')) % 100;
+						arrAddOne[arrAddOneCounter] = ((arrRightNo[arrRightNoPtrCounter] - '0') * (arrLeftNo[arrLeftNoPtrCounter] - '0')) % 10;
+						arrAddOne[arrAddOneCounter] += '0';		
 						
 					}
 					else
 					{
-						arrAddOne[arrAddOneCounter] = (arrRightNo[arrRightNoPtrCounter] * (arrLeftNo[arrLeftNoPtrCounter] - '0'));
-						arrAddOneCounter--;
+						arrAddOne[arrAddOneCounter] = ((arrRightNo[arrRightNoPtrCounter] - '0') * (arrLeftNo[arrLeftNoPtrCounter] - '0'));
+						arrAddOne[arrAddOneCounter] += '0';
 						
 					}
 					
-					
+					arrAddOneCounter--;
 				}
 				else
 				{
-					if ((arrRightNo[arrRightNoPtrCounter] * (arrLeftNo[arrLeftNoPtrCounter] - '0')) > 10 )
+					if (((arrRightNo[arrRightNoPtrCounter] - '0') * (arrLeftNo[arrLeftNoPtrCounter] - '0')) > 10 )
 					{
-						CarryVal = (arrRightNo[arrRightNoPtrCounter] * (arrLeftNo[arrLeftNoPtrCounter] - '0')) % 100;
-						arrAddTwo[arrAddTwoCounter] = (arrRightNo[arrRightNoPtrCounter] * (arrLeftNo[arrLeftNoPtrCounter] - '0')) % 10;
-						arrAddTwoCounter--;
-						
+						CarryVal = ((arrRightNo[arrRightNoPtrCounter] - '0') * (arrLeftNo[arrLeftNoPtrCounter] - '0')) % 100;
+						arrAddTwo[arrAddTwoCounter] = ((arrRightNo[arrRightNoPtrCounter] - '0') * (arrLeftNo[arrLeftNoPtrCounter] - '0')) % 10;
+						arrAddTwo[arrAddTwoCounter] += '0';
+						arrAddTwoCounter--;						
 					}
 					else
 					{
-						arrAddTwo[arrAddTwoCounter] = arrRightNo[arrRightNoPtrCounter] * (arrLeftNo[arrLeftNoPtrCounter] - '0');
+						arrAddTwo[arrAddTwoCounter] = (arrRightNo[arrRightNoPtrCounter] - '0') * (arrLeftNo[arrLeftNoPtrCounter] - '0');
+						arrAddTwo[arrAddTwoCounter] += '0';
+						
 						arrAddTwoCounter--;
 						
 					}
@@ -205,29 +219,48 @@ void Calc_vOperate(){
 				}
 				arrLeftNoPtrCounter--;
 			}
+			
 			if (boolIsTwoResLevelFinished == 1)
 			{
 				endOfArrSizeLeftOperand = arrAddOneCounter;
 				endOfArrSizeRightOperand = arrAddTwoCounter;
+				
+					arrFinalResultPtrCounter = 19;
+				
+				
 				arrFinalResultPtrCounter = Calc_vAddition(arrAddOne,19,arrAddTwo, 19,arrFinalResult,arrFinalResultPtrCounter);
+				arrAddTwoCounter++;
+				for (int i=19;i>=arrAddTwoCounter;i--)
+				{
+					arrAddTwo[i] = '0';					
+				}
+				
+				for(int i=19;i>arrFinalResultPtrCounter;i--)
+				{
+					arrAddOne[i] = arrFinalResult[i] + '0';
+					
+				}
+				arrAddOneCounter = arrFinalResultPtrCounter;
+				
 				
 			}
-			else
+			
+			else if (baseSizeOfRightOperand == 0)
 			{
 				for(int i=19;i>arrAddOneCounter;i--)
 				{
-					arrFinalResult[arrFinalResultPtrCounter] = arrAddOne[i];
-					
+					arrFinalResult[arrFinalResultPtrCounter] = arrAddOne[i] - '0';
 					arrFinalResultPtrCounter--;
 				}
 					
 			}
 			
 			boolIsFirstMultLevel = 0;
-			arrAddTwo[arrAddTwoCounter] = 0;
-			arrAddTwoCounter--;
+			
 			arrRightNoPtrCounter--;
-			arrLeftNoPtrCounter = baseSizeOfLeft;
+			
+			arrLeftNoPtrCounter = baseSizeOfLeftOperand;
+			
 		}
 	}
 	if (LastOperator == '/')
@@ -239,7 +272,8 @@ void Calc_vOperate(){
 	arrFinalResultPtrCounter++;
 	while(arrFinalResultPtrCounter < NO_ARRAY_SIZE)
 	{
-		arrLeftNo[arrLeftNoPtrCounter] = arrFinalResult[arrFinalResultPtrCounter] + '0';
+		arrLeftNo[arrLeftNoPtrCounter] = arrFinalResult[arrFinalResultPtrCounter] + '0';	
+		
 		arrFinalResultPtrCounter++;
 		arrLeftNoPtrCounter++;
 	}
@@ -252,8 +286,7 @@ uPtrInt8 Calc_vCalculate(uint8 parNo)
 {
 	
 	if(parNo == '=')
-	{
-		
+	{	
 		Calc_vOperate();
 		return arrLeftNo;
 	}
@@ -278,11 +311,22 @@ uPtrInt8 Calc_vCalculate(uint8 parNo)
 		
 		else
 		{
-			arrRightNo[arrRightNoPtrCounter] = (parNo - '0');
+			arrRightNo[arrRightNoPtrCounter] = (parNo);
 			arrRightNoPtrCounter++;
 		}
 		
 	}
 	
 	return NULLTER;
+}
+
+void Calc_vClear()
+{
+	arrLeftNoPtrCounter = 0;
+	arrRightNoPtrCounter = 0;
+	arrAddOneCounter = 19;
+	arrAddTwoCounter = 19;
+	endOfArrSizeLeftOperand = 0;
+	endOfArrSizeRightOperand = 0;
+	
 }

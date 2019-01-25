@@ -35,10 +35,15 @@ int main(void)
 					LCD_vPrintString(displayedString);
 					//LCD_vMoveCursir(0,1);
 				}
+				else if('A' == x)
+				{
+					LCD_vClearScreen();
+					Calc_vClear();
+				}
 				else
 				{
 					Calc_vCalculate(x);
-				LCD_vPrintChar(x);
+					LCD_vPrintChar(x);
 				
 				}
 				_delay_ms(40);
